@@ -3,8 +3,6 @@ from flask import Flask, stream_with_context, request, Response, flash, render_t
     json
 import model
 
-from database import Database
-
 app = Flask(__name__)
 app.secret_key = '!$w4wW~o|~9OVFQ'  # !!change this with random key!!
 
@@ -26,7 +24,3 @@ def index():
 def predict():
     sentence = request.args.get("cmd")
     return app.response_class(response=json.dumps(model.predict_model(sentence)), mimetype='application/json', status=200)
-
-
-if __name__ == '__main__':
-    app.run()
