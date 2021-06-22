@@ -1,12 +1,12 @@
 from time import sleep
 from flask import Flask, stream_with_context, request, Response, flash, render_template, redirect, url_for, jsonify, \
     json
-import model
+from app.model import init_model, predict_model
 
 app = Flask(__name__)
 app.secret_key = '!$w4wW~o|~9OVFQ'  # !!change this with random key!!
 
-model.init_model()
+init_model()
 
 def stream_template(template_name, **context):
     app.update_template_context(context)
@@ -23,4 +23,4 @@ def index():
 @app.route('/predict')
 def predict():
     sentence = request.args.get("cmd")
-    return app.response_class(response=json.dumps(model.predict_model(sentence)), mimetype='application/json', status=200)
+    return app.response_class(response=json.dumps(predict_model(sentence)), mimetype='application/json', status=200)
